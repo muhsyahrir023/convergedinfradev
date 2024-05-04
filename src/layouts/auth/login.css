@@ -43,4 +43,11 @@
       transform: translate(0, 0);
     }
   }
+
+@media (min-width: 768px) {
+    .sign-in__wrapper {
+      background-size: cover;
+    }
+  }
+  
   
