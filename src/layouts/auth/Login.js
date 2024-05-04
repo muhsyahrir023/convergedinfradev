@@ -82,7 +82,7 @@ const Login = () => {
       <Form
         className="shadow p-4 bg-white rounded"
         onSubmit={handleSubmit}
-        style={{ maxWidth: "90vw", margin: "0 auto" }}
+        style={{ maxWidth: "90mx", margin: "0 auto" }}
       >
         <div className="text-center">
           <img
