@@ -151,6 +151,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   sx={({ palette: { dark, white } }) => ({
                     color: light ? white.main : dark.main,
                   })}
+                    onClick={handleSignOut}
                 >
                   account_circle
                 </Icon>
