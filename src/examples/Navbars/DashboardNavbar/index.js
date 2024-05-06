@@ -24,8 +24,8 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
-import team2 from "assets/images/team-2.jpg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
+import team2 from "assets/images/logo-bi.png";
+import logoSpotify from "assets/images/logo-msi.png";
 import Swal from "sweetalert2";
 
 function DashboardNavbar({ absolute, light, isMini }) {
@@ -93,13 +93,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <NotificationItem
         image={<img src={team2} alt="person" />}
-        title={["New message", "from Laur"]}
+        title={["New message", "from BI"]}
         date="13 minutes ago"
         onClick={handleCloseMenu}
       />
       <NotificationItem
         image={<img src={logoSpotify} alt="person" />}
-        title={["New album", "by Travis Scott"]}
+        title={["New message", "by MSI"]}
         date="1 day"
         onClick={handleCloseMenu}
       />
