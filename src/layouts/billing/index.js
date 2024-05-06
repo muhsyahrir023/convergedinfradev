@@ -402,7 +402,7 @@ function ProblemTable() {
       </div>
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Data</Modal.Title>
+          <Modal.Title>Edit Data (Coming Soon)</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
