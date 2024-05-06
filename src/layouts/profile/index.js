@@ -46,7 +46,7 @@ function Overview() {
           <Grid item xs={12} md={6} xl={4}>
           <ProfileInfoCard
               title="profile information"
-              description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+              description="We are Converged Infra dev administrators who manage all reports and recommendations from Indonesian bank users"
               info={{
                 fullName: "Administrator",
                 mobile: "085242732640",
