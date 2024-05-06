@@ -1,7 +1,7 @@
 # [CI DEV INFRA]
 
 - Rekap Corrective Maintenance
+- React Js
+- Express Js
+- API
   
-Google+: <https://plus.google.com/+CreativetimPage>
-
-Instagram: <https://instagram.com/creativetimofficial>
