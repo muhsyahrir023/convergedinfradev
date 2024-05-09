@@ -93,7 +93,7 @@ function Overview() {
           </Grid>
           <Grid item xs={12} sm={6} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Realtime Size Database" }}
+                title={{ text: "Realtime Size Database (KB)" }}
                 count={databaseCount}
                 icon={{ color: "info", component: "check_circle"}}
               />
