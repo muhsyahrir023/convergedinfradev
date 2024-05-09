@@ -46,7 +46,7 @@ function Overview() {
       // Mengambil data ukuran tabel dari endpoint /tableSizes
       const response = await axios.get('https://api-cidev.vercel.app/tableSizes');
       // Menyimpan data ukuran tabel ke dalam state
-      setDatabaseCount(response.data[0]['Size (MB)']); // Asumsi pertama kali selalu "problems"
+      setDatabaseCount(response.data[0]['Size (KB)']); // Asumsi pertama kali selalu "problems"
     } catch (error) {
       console.error('Error:', error);
     }
