@@ -1,9 +1,8 @@
-
-
+import React, { useState, useEffect } from 'react';
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
+import axios from 'axios';
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -20,7 +19,7 @@ import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import ProfilesList from "examples/Lists/ProfilesList";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 import PlaceholderCard from "examples/Cards/PlaceholderCard";
-
+import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
@@ -36,8 +35,27 @@ import team1 from "assets/images/team-1.jpg";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
+import styled from "@emotion/styled";
 
 function Overview() {
+
+  const [databaseCount, setDatabaseCount] = useState(0);
+
+  const fetchDatabaseCounts = async () => {
+    try {
+      // Mengambil data ukuran tabel dari endpoint /tableSizes
+      const response = await axios.get('http://localhost:3001//tableSizes');
+      // Menyimpan data ukuran tabel ke dalam state
+      setDatabaseCount(response.data[0]['Size (MB)']); // Asumsi pertama kali selalu "problems"
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDatabaseCounts();
+  }, []);
+
   return (
     <DashboardLayout>
       <Header />
@@ -46,7 +64,7 @@ function Overview() {
           <Grid item xs={12} md={6} xl={4}>
           <ProfileInfoCard
               title="profile information"
-              description="We are Converged Infra dev administrators who manage all reports and recommendations from Indonesian bank users"
+              description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
               info={{
                 fullName: "Administrator",
                 mobile: "085242732640",
@@ -73,7 +91,13 @@ function Overview() {
               action={{ route: "", tooltip: "Edit Profile" }}
             />
           </Grid>
-         
+          <Grid item xs={12} sm={6} xl={4}>
+              <MiniStatisticsCard
+                title={{ text: "Realtime Size Database" }}
+                count={databaseCount}
+                icon={{ color: "info", component: "check_circle"}}
+              />
+            </Grid>
         </Grid>
       </SoftBox>
       <SoftBox mb={3}>
