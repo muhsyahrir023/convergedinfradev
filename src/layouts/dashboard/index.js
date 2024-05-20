@@ -9,48 +9,20 @@ import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCar
 import typography from "assets/theme/base/typography";
 import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
 import WorkWithTheRockets from "layouts/dashboard/components/WorkWithTheRockets";
+import { Line } from 'react-chartjs-2';
 
 function Dashboard() {
   const { size } = typography;
+  const [monthlyData, setMonthlyData] = useState({});
   const [problems, setProblems] = useState([]);
   const [pendingCount, setPendingCount] = useState(0);
   const [progressCount, setProgressCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
-  const [inactiveTime, setInactiveTime] = useState(0); // State untuk melacak waktu inaktif
-  const INACTIVE_THRESHOLD = 3 * 60 * 1000; // 3 menit dalam milidetik
-
+  
   useEffect(() => {
-    const interval = setInterval(() => {
-      setInactiveTime(prevInactiveTime => prevInactiveTime + 1000); // Update waktu inaktif setiap detik
-    }, 1000);
-
-    // Hentikan interval jika komponen tidak lagi dirender atau saat komponen akan unmount
-    return () => clearInterval(interval);
+    fetchProblemCounts();
+    fetchData();
   }, []);
-
-  useEffect(() => {
-    // Reset waktu inaktif jika ada interaksi pengguna
-    const resetInactiveTime = () => {
-      setInactiveTime(0);
-    };
-
-    // Tambahkan event listener untuk interaksi pengguna
-    document.addEventListener('mousemove', resetInactiveTime);
-    document.addEventListener('keypress', resetInactiveTime);
-
-    // Hapus event listener saat komponen akan unmount
-    return () => {
-      document.removeEventListener('mousemove', resetInactiveTime);
-      document.removeEventListener('keypress', resetInactiveTime);
-    };
-  }, []);
-
-  useEffect(() => {
-    // Redirect ke halaman login jika waktu inaktif mencapai ambang batas
-    if (inactiveTime >= INACTIVE_THRESHOLD) {
-      redirectToLogin();
-    }
-  }, [inactiveTime]);
 
   const fetchProblemCounts = async () => {
     try {
@@ -65,14 +37,42 @@ function Dashboard() {
     }
   };
 
-  const redirectToLogin = () => {
-    // Redirect ke halaman login
-    window.location.href = '/login';
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://api-cidev.vercel.app/views');
+      const monthlyData = processData(response.data.payload.datas);
+      setMonthlyData(monthlyData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
-  useEffect(() => {
-    fetchProblemCounts();
-  }, []);
+  const processData = (data) => {
+    // Inisialisasi objek untuk menyimpan data per bulan
+    const monthlyData = {
+      January: 0,
+      February: 0,
+      March: 0,
+      April: 0,
+      May: 0,
+      June: 0,
+      July: 0,
+      August: 0,
+      September: 0,
+      October: 0,
+      November: 0,
+      December: 0,
+    };
+
+    // Proses data dan hitung jumlah masalah per bulan
+    data.forEach(problem => {
+      const date = new Date(problem.date);
+      const month = date.toLocaleString('default', { month: 'long' });
+      monthlyData[month] += 1;
+    });
+
+    return monthlyData;
+  };
 
   return (
     <DashboardLayout>
@@ -115,7 +115,18 @@ function Dashboard() {
         </SoftBox>
         <SoftBox mb={3}>
           <Grid container spacing={3}>
-            {/* Konten tambahan */}
+            <Grid item xs={12}>
+              <Line data={{
+                labels: Object.keys(monthlyData),
+                datasets: [{
+                  label: 'Monthly Problems',
+                  data: Object.values(monthlyData),
+                  fill: false,
+                  borderColor: 'rgb(75, 192, 192)',
+                  tension: 0.1
+                }]
+              }} />
+            </Grid>
           </Grid>
         </SoftBox>
       </SoftBox>
