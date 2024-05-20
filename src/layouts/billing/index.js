@@ -271,6 +271,14 @@ function ProblemTable() {
     })
   ).slice(indexOfFirstItem, indexOfLastItem);
 
+  const handleSelectAll = () => {
+    if (selectedItems.length === problems.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(problems.map(item => item.id));
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -323,13 +331,7 @@ function ProblemTable() {
                                     type="checkbox"
                                     className="form-check-input"
                                     checked={selectedItems.length === currentItems.length}
-                                    onChange={() => {
-                                      if (selectedItems.length === currentItems.length) {
-                                        setSelectedItems([]);
-                                      } else {
-                                        setSelectedItems(currentItems.map(item => item.id));
-                                      }
-                                    }}
+                                    onChange={handleSelectAll}
                                   />
                                 </div>
                               </th>
