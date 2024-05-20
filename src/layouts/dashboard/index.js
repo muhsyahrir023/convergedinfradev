@@ -133,7 +133,7 @@ function Dashboard() {
                     plugins: {
                       title: {
                         display: true,
-                        text: 'Grafik Data Perbulan', // Judul grafik
+                        text: 'Monthly Problem Data Graph', // Judul grafik
                         font: {
                           size: 16
                         }
