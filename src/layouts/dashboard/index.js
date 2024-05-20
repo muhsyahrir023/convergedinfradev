@@ -116,37 +116,16 @@ function Dashboard() {
         <SoftBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Line
-  data={{
-    labels: Object.keys(monthlyData),
-    datasets: [{
-      label: 'Monthly Problems',
-      data: Object.values(monthlyData),
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1
-    }]
-  }}
-  options={{
-    plugins: {
-      title: {
-        display: true,
-        text: 'Grafik Data Perbulan', // Judul grafik
-        font: {
-          size: 16
-        }
-      },
-      legend: {
-        display: false // Sembunyikan legenda
-      }
-    },
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }}
-/>
+              <Line data={{
+                labels: Object.keys(monthlyData),
+                datasets: [{
+                  label: 'Monthly Problems',
+                  data: Object.values(monthlyData),
+                  fill: false,
+                  borderColor: 'rgb(75, 192, 192)',
+                  tension: 0.1
+                }]
+              }} />
             </Grid>
           </Grid>
         </SoftBox>
