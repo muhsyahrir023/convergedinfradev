@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import axios from 'axios';
 import SoftBox from "components/SoftBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -116,16 +117,39 @@ function Dashboard() {
         <SoftBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Line data={{
-                labels: Object.keys(monthlyData),
-                datasets: [{
-                  label: 'Monthly Problems',
-                  data: Object.values(monthlyData),
-                  fill: false,
-                  borderColor: 'rgb(75, 192, 192)',
-                  tension: 0.1
-                }]
-              }} />
+              <Paper elevation={3} sx={{ padding: 2 }}>
+                <Line
+                  data={{
+                    labels: Object.keys(monthlyData),
+                    datasets: [{
+                      label: 'Monthly Problems',
+                      data: Object.values(monthlyData),
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                  }}
+                  options={{
+                    plugins: {
+                      title: {
+                        display: true,
+                        text: 'Grafik Data Perbulan', // Judul grafik
+                        font: {
+                          size: 16
+                        }
+                      },
+                      legend: {
+                        display: false // Sembunyikan legenda
+                      }
+                    },
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }}
+                />
+              </Paper>
             </Grid>
           </Grid>
         </SoftBox>
