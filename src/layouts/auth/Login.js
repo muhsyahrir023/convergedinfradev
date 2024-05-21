@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
-import axios from "axios"; // Import Axios
-import { Link } from 'react-router-dom';
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import "./login.css";
 
 import BackgroundImage from "../../assets/images/background-login.jpg";
 import Logo from "../../assets/images/logo-bi.png";
 import Logo1 from "../../assets/images/msi.jpg";
-// Import library yang diperlukan
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -41,6 +39,7 @@ const Login = () => {
       .then(res => {
         setLoading(false);
         if (res.data.Status === "Success") {
+          localStorage.setItem('authToken', res.data.token);
           Swal.fire({
             icon: "success",
             title: "Login Successful!",
