@@ -10,6 +10,7 @@ import Office from "examples/Icons/Office";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
 import Test from "layouts/auth/Test";
+import ProtectedRoute from './components/ProtectedRoute';
 
 const mainRoutes = [
   {
@@ -18,7 +19,9 @@ const mainRoutes = [
     key: "dashboard",
     route: "/dashboard",
     icon: <Shop size="12px" />,
-    component: <Dashboard />,
+    component: <ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>,
     noCollapse: true,
   },
   {
@@ -27,7 +30,9 @@ const mainRoutes = [
     key: "add-problems",
     route: "/add-problems",
     icon: <Office size="12px" />,
-    component: <AddProblems />,
+    component: <ProtectedRoute>
+      <AddProblems />
+    </ProtectedRoute>,
     noCollapse: true,
   },
   {
@@ -36,7 +41,9 @@ const mainRoutes = [
     key: "views",
     route: "/views",
     icon: <CreditCard size="12px" />,
-    component: <Billing />,
+    component: <ProtectedRoute>
+      <Billing />
+    </ProtectedRoute>,
     noCollapse: true,
   },
   { type: "title", title: "Account Pages", key: "account-pages" },
@@ -46,7 +53,9 @@ const mainRoutes = [
     key: "profile",
     route: "/profile",
     icon: <CustomerSupport size="12px" />,
-    component: <Profile />,
+    component: <ProtectedRoute>
+      <Profile />
+    </ProtectedRoute>,
     noCollapse: true,
   },
 ];
