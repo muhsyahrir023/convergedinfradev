@@ -92,12 +92,26 @@ function Overview() {
             />
           </Grid>
           <Grid item xs={12} sm={6} xl={4}>
-              <MiniStatisticsCard
-                title={{ text: "Realtime Size Database (KB)" }}
-                count={databaseCount}
-                icon={{ color: "info", component: "check_circle"}}
-              />
-            </Grid>
+        <MiniStatisticsCard
+          title={{ text: "Realtime Size Database (KB)" }}
+          count={databaseCount}
+          icon={{
+            color: "info",
+            component: (
+              <a 
+                href="https://phpmyadmin.freedb.tech/index.php?route=/sql&pos=0&db=freedb_convergedinfra&table=problems"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg className="w-6 h-6">
+                  <path fill="currentColor" d="M12 2a10 10 0 1 1-7.07 2.93A10 10 0 0 1 12 2m0-2a12 12 0 1 0 8.49 3.51A12 12 0 0 0 12 0z"/>
+                  <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M16.24 7.76L12 12 7.76 16.24M12 6v6h6"/>
+                </svg>
+              </a>
+            ),
+          }}
+        />
+      </Grid>
         </Grid>
       </SoftBox>
       <SoftBox mb={3}>
