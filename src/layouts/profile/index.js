@@ -103,9 +103,14 @@ function Overview() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <svg className="w-6 h-6">
-                  <path fill="currentColor" d="M12 2a10 10 0 1 1-7.07 2.93A10 10 0 0 1 12 2m0-2a12 12 0 1 0 8.49 3.51A12 12 0 0 0 12 0z"/>
-                  <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M16.24 7.76L12 12 7.76 16.24M12 6v6h6"/>
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="white"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12 2a10 10 0 1 1-7.07 2.93A10 10 0 0 1 12 2m0-2a12 12 0 1 0 8.49 3.51A12 12 0 0 0 12 0z"/>
+                  <path fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M16.24 7.76L12 12 7.76 16.24M12 6v6h6"/>
                 </svg>
               </a>
             ),
