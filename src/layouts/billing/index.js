@@ -308,6 +308,7 @@ function ProblemTable() {
                             <a className="dropdown-item" href="https://docs.google.com/spreadsheets/d/1LijGsIDFafZ3XTqrtaCzhs3DCnpKxlNmmjhDmhMCTkA/edit#gid=251384382">Data Perangkat</a>
                             <a className="dropdown-item" href="https://docs.google.com/spreadsheets/d/17IrMqheSsgTxRhmbBN8fPPGsz23wKzqcqT_0BG4ek5w/edit#gid=468076244">Data LUN</a>
                             <a className="dropdown-item" href="https://docs.google.com/spreadsheets/d/1xjRShnQ7wdOV_L1FDA4pqJc4hYxddWbw7ZOKOedx9X8/edit#gid=1120620629">Data Create VM</a>
+                            <a className="dropdown-item" href="https://docs.google.com/spreadsheets/d/1K56gI0W9gu6sH2YJujNcmK1kdnN8w1-6TbC1HA-nnyw/edit#gid=0">Data Inventory Disk and Memory</a>
                           </div>
                         </div>
                         <input
