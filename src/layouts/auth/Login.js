@@ -35,7 +35,7 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    axios.post('https://api-cidev.vercel.app/auth', values)
+    axios.post('https://api-convergedinfrav2.vercel.app/auth', values)
       .then(res => {
         setLoading(false);
         if (res.data.Status === "Success") {
