@@ -29,7 +29,7 @@ function ProblemTable() {
 
   const fetchProblems = async () => {
     try {
-      const response = await axios.get('https://api-cidev.vercel.app/views');
+      const response = await axios.get('https://api-convergedinfrav2.vercel.app/views');
       setProblems(response.data.payload.datas);
     } catch (error) {
       console.error('Error:', error);
@@ -76,7 +76,7 @@ function ProblemTable() {
 
   const handleDeleteSelectedItems = async () => {
     try {
-      await axios.delete('https://api-cidev.vercel.app/delete-problems', {
+      await axios.delete('https://api-convergedinfrav2.vercel.app/delete-problems', {
         data: {
           ids: selectedItems
         }
@@ -170,7 +170,7 @@ function ProblemTable() {
 
     const idToEdit = selectedItems[0];
     try {
-      const response = await axios.get(`https://api-cidev.vercel.app/views/${idToEdit}`);
+      const response = await axios.get(`https://api-convergedinfrav2.vercel.app/views/${idToEdit}`);
       setEditData({ ...response.data.payload.data, originalData: { ...response.data.payload.data } });
       setEditedValue(response.data.payload.data);
       setShowModal(true);
@@ -193,7 +193,7 @@ function ProblemTable() {
 
   const handleModalSave = async () => {
     try {
-      await axios.put(`https://api-cidev.vercel.app/views/${editData.id}`, {
+      await axios.put(`https://api-convergedinfrav2.vercel.app/views/${editData.id}`, {
         request: editData.request || editData.originalData.request,
         temporary: editData.temporary || editData.originalData.temporary,
         permanent: editData.permanent || editData.originalData.permanent,
