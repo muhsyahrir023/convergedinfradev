@@ -27,7 +27,7 @@ function Dashboard() {
 
   const fetchProblemCounts = async () => {
     try {
-      const response = await axios.get('https://api-cidev.vercel.app/views');
+      const response = await axios.get('https://api-convergedinfrav2.vercel.app/views');
       setProblems(response.data.payload.datas);
       // Hitung jumlah data dalam setiap kategori
       setPendingCount(response.data.payload.datas.filter(problem => problem.status === 'pending').length);
@@ -40,7 +40,7 @@ function Dashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://api-cidev.vercel.app/views');
+      const response = await axios.get('https://api-convergedinfrav2.vercel.app/views');
       const monthlyData = processData(response.data.payload.datas);
       setMonthlyData(monthlyData);
     } catch (error) {
