@@ -44,7 +44,7 @@ function Overview() {
   const fetchDatabaseCounts = async () => {
     try {
       // Mengambil data ukuran tabel dari endpoint /tableSizes
-      const response = await axios.get('https://api-cidev.vercel.app/tableSizes');
+      const response = await axios.get('https://api-convergedinfrav2.vercel.app/tableSizes');
       // Menyimpan data ukuran tabel ke dalam state
       setDatabaseCount(response.data[0]['Size (KB)']); // Asumsi pertama kali selalu "problems"
     } catch (error) {
