@@ -24,7 +24,7 @@ function AddProblems() {
     timer: 2000
   });
   try {
-    await axios.post('https://api-cidev.vercel.app/add-problem', {
+    await axios.post('https://api-convergedinfrav2.vercel.app/add-problem', {
       request,
       temporary,
       permanent,
