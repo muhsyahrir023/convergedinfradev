@@ -8,6 +8,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 
+import { Modal, Button, Form } from 'react-bootstrap';
+
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
@@ -40,6 +42,65 @@ import styled from "@emotion/styled";
 function Overview() {
 
   const [databaseCount, setDatabaseCount] = useState(0);
+
+  const [problems, setProblems] = useState([]);
+  const [currentProblem, setCurrentProblem] = useState(null);
+  const [editItem, setEditItem] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    fetchProblems();
+  }, []);
+
+  const fetchProblems = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/views');
+      if (response.data.payload && response.data.payload.status_code === 200) {
+        setProblems(response.data.payload.datas);
+      } else {
+        alert('Failed to fetch data.');
+      }
+    } catch (error) {
+      alert('Failed to fetch data.');
+    }
+  };
+
+  const openEditModal = (index) => {
+    setCurrentProblem({ ...problems[index], index });
+    setShowModal(true);
+  };
+
+  const openEditModalProblem = () => {
+    setShowModal(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditItem({ ...editItem, [name]: value });
+  };
+
+  const saveChanges = async () => {
+    const editedData = {
+      id: editItem.id,
+      request: editItem.request,
+      temporary: editItem.temporary,
+      permanent: editItem.permanent,
+      status: editItem.status,
+      date: editItem.date
+    };
+
+    try {
+      await axios.post('https://api-convergedinfrav2.vercel.app/api/update', editedData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      setShowModal(false);
+      fetchProblems();
+    } catch (error) {
+      alert('Failed to update data.');
+    }
+  };
 
   const fetchDatabaseCounts = async () => {
     try {
@@ -93,13 +154,12 @@ function Overview() {
           </Grid>
           <Grid item xs={12} sm={6} xl={4}>
         <MiniStatisticsCard
-          title={{ text: "Realtime Size Database (KB)" }}
-          count={databaseCount}
+          title={{ text: "Filestore Firebase DB" }}
           icon={{
             color: "info",
             component: (
               <a 
-                href="https://phpmyadmin.freedb.tech/index.php?route=/sql&pos=0&db=freedb_convergedinfra&table=problems"
+                href="https://console.firebase.google.com/project/convergedinfra-3ded5/firestore/databases/-default-/data/~2Fcidev~2F06ld3ss7pVGq0c46ZCuW?hl=id"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -203,6 +263,117 @@ function Overview() {
           </SoftBox>
         </Card>
       </SoftBox>
+      
+      <SoftBox mb={3}>
+        <Card>
+      <div className="container table-container">
+      <p></p>
+      <h5>Data Problems All</h5>
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Request</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {problems.map((problem, index) => (
+            <tr key={problem.id}>
+              <td>{index + 1}</td>
+              <td>{problem.request}</td>
+              <td>{problem.status}</td>
+            
+              <td>
+                <Button
+                  variant="primary"
+                  onClick={() => openEditModal(index)}
+                >
+                  Edit
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {currentProblem && (
+        <Modal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Data</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group>
+                <Form.Label>Request:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="request"
+                  value={currentProblem.request}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>No Ticket:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="temporary"
+                  value={currentProblem.temporary}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Solution:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="permanent"
+                  value={currentProblem.permanent}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Status:</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="status"
+                  value={currentProblem.status}
+                  onChange={handleInputChange}
+                >
+                  <option value="pending">Pending</option>
+                  <option value="progress">Progress</option>
+                  <option value="completed">Completed</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Date:</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="date"
+                  value={currentProblem.date}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={saveChanges}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+    </div>
+    </Card>
+    </SoftBox>
+
+
 
       <Footer />
     </DashboardLayout>
