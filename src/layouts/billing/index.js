@@ -296,13 +296,6 @@ function ProblemTable() {
                             Actions
                           </button>
                           <div className={`dropdown-menu${showDropdown ? " show" : ""}`} aria-labelledby="dropdownMenuButton">
-                            <a
-                              className="dropdown-item"
-                              href="#"
-                              onClick={handleModalOpen}
-                            >
-                              Edit
-                            </a>
                             <a className="dropdown-item" href="#" onClick={handleDelete}>Delete</a>
                             <a className="dropdown-item" href="#" onClick={handleExportexcel}>Export Excel</a>
                             <a className="dropdown-item" href="https://docs.google.com/spreadsheets/d/1LijGsIDFafZ3XTqrtaCzhs3DCnpKxlNmmjhDmhMCTkA/edit#gid=251384382">Data Perangkat</a>
