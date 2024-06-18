@@ -42,7 +42,6 @@ import styled from "@emotion/styled";
 function Overview() {
 
   const [databaseCount, setDatabaseCount] = useState(0);
-
   const [problems, setProblems] = useState([]);
   const [currentProblem, setCurrentProblem] = useState(null);
   const [editItem, setEditItem] = useState(null);
@@ -54,7 +53,7 @@ function Overview() {
 
   const fetchProblems = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/views');
+      const response = await axios.get('https://api-convergedinfrav2.vercel.app/views');
       if (response.data.payload && response.data.payload.status_code === 200) {
         setProblems(response.data.payload.datas);
       } else {
@@ -66,11 +65,8 @@ function Overview() {
   };
 
   const openEditModal = (index) => {
-    setCurrentProblem({ ...problems[index], index });
-    setShowModal(true);
-  };
-
-  const openEditModalProblem = () => {
+    setCurrentProblem(problems[index]);
+    setEditItem({ ...problems[index] });
     setShowModal(true);
   };
 
@@ -104,10 +100,8 @@ function Overview() {
 
   const fetchDatabaseCounts = async () => {
     try {
-      // Mengambil data ukuran tabel dari endpoint /tableSizes
       const response = await axios.get('https://api-convergedinfrav2.vercel.app/tableSizes');
-      // Menyimpan data ukuran tabel ke dalam state
-      setDatabaseCount(response.data[0]['Size (KB)']); // Asumsi pertama kali selalu "problems"
+      setDatabaseCount(response.data[0]['Size (KB)']); // Assumsi pertama kali selalu "problems"
     } catch (error) {
       console.error('Error:', error);
     }
@@ -123,7 +117,7 @@ function Overview() {
       <SoftBox mt={5} mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} xl={4}>
-          <ProfileInfoCard
+            <ProfileInfoCard
               title="profile information"
               description="we are bank indonesia master system engineers whose job is to carry out project maintenance converged infra development and preventive maintenance, this is filled in by the engineer himself as a recap report."
               info={{
@@ -153,31 +147,31 @@ function Overview() {
             />
           </Grid>
           <Grid item xs={12} sm={6} xl={4}>
-        <MiniStatisticsCard
-          title={{ text: "Filestore Firebase DB" }}
-          icon={{
-            color: "info",
-            component: (
-              <a 
-                href="https://console.firebase.google.com/project/convergedinfra-3ded5/firestore/databases/-default-/data/~2Fcidev~2F06ld3ss7pVGq0c46ZCuW?hl=id"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                  <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="white"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M12 2a10 10 0 1 1-7.07 2.93A10 10 0 0 1 12 2m0-2a12 12 0 1 0 8.49 3.51A12 12 0 0 0 12 0z"/>
-                  <path fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M16.24 7.76L12 12 7.76 16.24M12 6v6h6"/>
-                </svg>
-              </a>
-            ),
-          }}
-        />
-      </Grid>
+            <MiniStatisticsCard
+              title={{ text: "Firestore Firebase" }}
+              icon={{
+                color: "info",
+                component: (
+                  <a 
+                    href="https://console.firebase.google.com/project/convergedinfra-3ded5/firestore/databases/-default-/data/~2F?hl=id"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M12 2a10 10 0 1 1-7.07 2.93A10 10 0 0 1 12 2m0-2a12 12 0 1 0 8.49 3.51A12 12 0 0 0 12 0z"/>
+                      <path fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M16.24 7.76L12 12 7.76 16.24M12 6v6h6"/>
+                    </svg>
+                  </a>
+                ),
+              }}
+            />
+          </Grid>
         </Grid>
       </SoftBox>
       <SoftBox mb={3}>
@@ -265,115 +259,112 @@ function Overview() {
       </SoftBox>
       
       <SoftBox mb={3}>
-        <Card>
+      <Card>
       <div className="container table-container">
-      <p></p>
-      <h5>Data Problems All</h5>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Request</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {problems.map((problem, index) => (
-            <tr key={problem.id}>
-              <td>{index + 1}</td>
-              <td>{problem.request}</td>
-              <td>{problem.status}</td>
-            
-              <td>
-                <Button
-                  variant="primary"
-                  onClick={() => openEditModal(index)}
-                >
-                  Edit
-                </Button>
-              </td>
+        <p></p>
+        <h5>Data Problems All</h5>
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Request</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {problems.map((problem, index) => (
+              <tr key={problem.id}>
+                <td>{index + 1}</td>
+                <td>{problem.request}</td>   
+                <td>{problem.status}</td>
+                <td>
+                  <Button
+                    variant="primary"
+                    onClick={() => openEditModal(index)}
+                  >
+                    Edit
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      {currentProblem && (
-        <Modal
-          show={showModal}
-          onHide={() => setShowModal(false)}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Edit Data</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Request:</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="request"
-                  value={currentProblem.request}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>No Ticket:</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="temporary"
-                  value={currentProblem.temporary}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Solution:</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="permanent"
-                  value={currentProblem.permanent}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Status:</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="status"
-                  value={currentProblem.status}
-                  onChange={handleInputChange}
-                >
-                  <option value="pending">Pending</option>
-                  <option value="progress">Progress</option>
-                  <option value="completed">Completed</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Date:</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="date"
-                  value={currentProblem.date}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={saveChanges}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
-    </div>
-    </Card>
-    </SoftBox>
-
-
+        {editItem && (
+          <Modal
+            show={showModal}
+            onHide={() => setShowModal(false)}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Data</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group>
+                  <Form.Label>Request:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="request"
+                    value={editItem.request}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>No Ticket:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="temporary"
+                    value={editItem.temporary}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Solution:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="permanent"
+                    value={editItem.permanent}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Status:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="status"
+                    value={editItem.status}
+                    onChange={handleInputChange}
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="progress">Progress</option>
+                    <option value="completed">Completed</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Date:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="date"
+                    value={editItem.date}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowModal(false)}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={saveChanges}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+      </div>
+      </Card>
+      </SoftBox>
 
       <Footer />
     </DashboardLayout>
