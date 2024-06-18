@@ -38,6 +38,7 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 import styled from "@emotion/styled";
+import Swal from 'sweetalert2';
 
 function Overview() {
 
@@ -93,8 +94,23 @@ function Overview() {
       });
       setShowModal(false);
       fetchProblems();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Data Updated successfully",
+        showConfirmButton: false,
+        timer: 2000
+      });
     } catch (error) {
-      alert('Failed to update data.');
+      console.error('Error Updated data:', error);
+
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Failed to updated data",
+        showConfirmButton: false,
+        timer: 2000
+      });
     }
   };
 
