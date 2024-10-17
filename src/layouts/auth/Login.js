@@ -18,9 +18,15 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const navigate = useNavigate();
-
+  // Handle form validation to enable/disable the button
+  useEffect(() => {
+    const isFormValid = values.username.trim() !== '' && values.password.trim() !== '';
+    setIsButtonDisabled(!isFormValid);
+  }, [values]);
+  
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -131,7 +137,7 @@ const Login = () => {
         </Form.Group>
 
         {!loading ? (
-          <Button className="w-100 mt-2" variant="primary" type="submit">
+          <Button className="w-100 mt-2" variant="primary" type="submit" disabled={isButtonDisabled}>
             Log In
           </Button>
         ) : (
