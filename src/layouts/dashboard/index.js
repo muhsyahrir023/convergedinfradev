@@ -19,7 +19,7 @@ function Dashboard() {
   const [pendingCount, setPendingCount] = useState(0);
   const [progressCount, setProgressCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
-
+  
   useEffect(() => {
     fetchProblemCounts();
     fetchData();
@@ -29,7 +29,6 @@ function Dashboard() {
     try {
       const response = await axios.get('https://api-convergedinfrav2.vercel.app/views');
       setProblems(response.data.payload.datas);
-
       // Hitung jumlah data dalam setiap kategori
       setPendingCount(response.data.payload.datas.filter(problem => problem.status === 'pending').length);
       setProgressCount(response.data.payload.datas.filter(problem => problem.status === 'progress').length);
@@ -42,27 +41,35 @@ function Dashboard() {
   const fetchData = async () => {
     try {
       const response = await axios.get('https://api-convergedinfrav2.vercel.app/views');
-      const processedData = processData(response.data.payload.datas);
-      setMonthlyData(processedData);
+      const monthlyData = processData(response.data.payload.datas);
+      setMonthlyData(monthlyData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
   const processData = (data) => {
-    // Inisialisasi objek untuk menyimpan data per bulan dan tahun
-    const monthlyData = {};
+    // Inisialisasi objek untuk menyimpan data per bulan
+    const monthlyData = {
+      January: 0,
+      February: 0,
+      March: 0,
+      April: 0,
+      May: 0,
+      June: 0,
+      July: 0,
+      August: 0,
+      September: 0,
+      October: 0,
+      November: 0,
+      December: 0,
+    };
 
-    // Proses data dan hitung jumlah masalah per bulan dan tahun
+    // Proses data dan hitung jumlah masalah per bulan
     data.forEach(problem => {
       const date = new Date(problem.date);
-      const monthYear = date.toLocaleString('default', { month: 'long' }) + " " + date.getFullYear();
-
-      if (!monthlyData[monthYear]) {
-        monthlyData[monthYear] = 0;
-      }
-
-      monthlyData[monthYear] += 1;
+      const month = date.toLocaleString('default', { month: 'long' });
+      monthlyData[month] += 1;
     });
 
     return monthlyData;
@@ -126,13 +133,13 @@ function Dashboard() {
                     plugins: {
                       title: {
                         display: true,
-                        text: 'Monthly Problem Data Graph',
+                        text: 'Monthly Problem Data Graph', // Judul grafik
                         font: {
                           size: 16
                         }
                       },
                       legend: {
-                        display: false
+                        display: false // Sembunyikan legenda
                       }
                     },
                     scales: {
